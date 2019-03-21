@@ -21,7 +21,7 @@ from Util.utilFunction import validUsefulProxy
 from Manager.ProxyManager import ProxyManager
 from Util.LogHandler import LogHandler
 
-FAIL_COUNT = 1  # 校验失败次数， 超过次数删除代理
+FAIL_COUNT = 3  # 校验失败次数， 超过次数删除代理
 
 
 class ProxyCheck(ProxyManager, Thread):
@@ -43,11 +43,11 @@ class ProxyCheck(ProxyManager, Thread):
                     self.db.put(proxy, num=int(count) - 1)
                 else:
                     pass
-                self.log.info('ProxyCheck: {} validation pass'.format(proxy))
+                self.log.info('ProxyCheck: {} google validation pass'.format(proxy))
             else:
-                self.log.info('ProxyCheck: {} validation fail'.format(proxy))
+                self.log.info('ProxyCheck: {} google validation fail'.format(proxy))
                 if count and int(count) + 1 >= FAIL_COUNT:
-                    self.log.info('ProxyCheck: {} fail too many, delete!'.format(proxy))
+                    self.log.info('ProxyCheck: {} fail google too many, delete!'.format(proxy))
                     self.db.delete(proxy)
                 else:
                     self.db.put(proxy, num=int(count) + 1)
